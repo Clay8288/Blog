@@ -1,0 +1,88 @@
+.block{
+    width: 95%;
+    height: 30rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+form {
+    width: 100%;
+    min-height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.form-control {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.form-control:nth-child(4) {
+    height: 80px;
+    align-items: flex-start;
+}
+
+label {
+    width: 30%;
+}
+
+input, select, textarea {
+    width: 60%;
+}
+
+#category {
+    font-size: 1rem;
+}
+
+#content {
+    height: 100%;
+}
+
+.form-action {
+    width: 40%;
+    height: 30px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.btn-cxl {
+    width: 95px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.1em solid #f1f1f1;
+    text-decoration: none;
+    color: black;
+    border-radius: 5px;
+}
+
+.btn-cxl:hover {
+    background-color: #e7e7e7;
+}
+
+.btn-save {
+    height: 100%;
+    width: 95px;
+    background-color: #c6efcc;
+    border: none;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+.btn-save:hover {
+    background-color: #9bd1a3;
+}
+
+.btn-cxl, .btn-save {
+    box-shadow: 2px 2px 5px rgb(230, 230, 230);
+}
