@@ -1,11 +1,12 @@
 <?php
 
-$filename = __DIR__ . "/data/article.json";
-$articles = [];
+//ini_set('display_errors', 'on');
+$articlesDB = require_once './database/models/ArticleDB.php';
+
+$articles = $articlesDB->fetchAll();
 $categories = [];
 
-if (file_exists($filename)) {
-    $articles = json_decode(file_get_contents($filename), true) ?? [];
+if (count($articles)) {
     $categoriesList = array_map(fn ($article) => $article['category'], $articles);
     //print_r($categoriesList);
 
@@ -76,6 +77,6 @@ if (file_exists($filename)) {
         </main>
         <?php require_once __DIR__ . "/templates/footer.php" ?>
     </div>
-</body>
+</body> 
 
 </html>
