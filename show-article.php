@@ -1,5 +1,9 @@
 <?php
 
+require_once __DIR__ . '/database/database.php';
+$authDB = require_once __DIR__ . '/database/security.php';
+
+$currentUser = $authDB->isLoggedin();
 
 $articlesDB = require_once './database/models/ArticleDB.php';
 $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -40,10 +44,13 @@ if (!$id) {
                 <h1 class="article-title"><?= $article['title'] ?></h1>
                 <div class="separator"></div>
                 <div class="article-content"><?= $article['content'] ?></div>
+                <p class="article-author"><?= $article['firstname'] . ' ' . $article['lastname'] ?></p>
+                <?php if($currentUser && $currentUser['id'] === $article['author'] ): ?>
                 <div class="action">
                     <a href="FormArticle.php?id=<?= $article['id'] ?>">Éditer</a>
                     <a href="DeleteArticle.php?id=<?= $article['id'] ?>">Supprimer</a>
                 </div>
+                <?php endif; ?>
             </div>
         </main>
         <?php require_once __DIR__ . "/templates/footer.php" ?>

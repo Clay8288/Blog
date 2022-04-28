@@ -1,5 +1,13 @@
 <?php
 
+require_once __DIR__ . '/database/database.php';
+$authDB = require_once __DIR__ . '/database/security.php';
+
+$currentUser = $authDB->isLoggedin();
+if(!$currentUser){
+    header('Location: /');
+}
+
 $articlesDB = require_once './database/models/ArticleDB.php';
 
 const ERROR_REQUIRED = "Veuillez renseigner ce champ";
@@ -19,6 +27,9 @@ $id = $_GET['id'] ?? '';
 
 if ($id) {
     $article = $articlesDB->fetchOne($id);
+    if($article['author'] !== $currentUser['id']){
+        header('Location: /');
+    }
     $title = $article['title'];
     $image = $article['image'];
     $category = $article['category'];
@@ -71,13 +82,15 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $article['image'] = $image;
             $article['category'] = $category;
             $article['content'] = $content;
+            $article['author'] = $currentUser['id'];
             $articlesDB->updateOne($article);
         } else {
             $articlesDB->createOne([
                 'title' => $title,
                 'content' => $content,
                 'image' => $image,
-                'category' => $category
+                'category' => $category,
+                'author' => $currentUser['id']
             ]);
         }
         header('Location: /');

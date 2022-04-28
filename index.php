@@ -1,10 +1,16 @@
 <?php
 
+require __DIR__ . '/database/database.php';
+
+$authDB = require __DIR__ . '/database/security.php';
+$currentUser = $authDB->isLoggedin();
 //ini_set('display_errors', 'on');
-$articlesDB = require_once './database/models/ArticleDB.php';
+$articlesDB = require_once __DIR__ . '/database/models/ArticleDB.php';
 
 $articles = $articlesDB->fetchAll();
 $categories = [];
+// var_dump($articles);
+// exit;
 
 if (count($articles)) {
     $categoriesList = array_map(fn ($article) => $article['category'], $articles);
@@ -55,7 +61,7 @@ if (count($articles)) {
     <div class="container">
 
         <?php require_once __DIR__ . "/templates/header.php" ?>
-        
+
         <main class="content">
             <div class="category-container">
                 <?php foreach ($categories as $categoryKey => $category) : ?>
@@ -68,7 +74,12 @@ if (count($articles)) {
                                     </div>
                                 </div>
                                 <h3><?= $article['title'] ?></h3>
-                        </a>
+                                <?php if ($article['author']) : ?>
+                                    <div class="author">
+                                        <p><?= $article['firstname'] . ' ' . $article['lastname'] ?></p>
+                                    </div>
+                                <?php endif; ?>
+                            </a>
                         <?php endforeach; ?>
                     </div>
 
@@ -77,6 +88,6 @@ if (count($articles)) {
         </main>
         <?php require_once __DIR__ . "/templates/footer.php" ?>
     </div>
-</body> 
+</body>
 
 </html>
